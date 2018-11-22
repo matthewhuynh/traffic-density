@@ -1,0 +1,14 @@
+camera1/
+camera2/
+camera3/
+camera4/
+camera1_/
+camera2_/
+camera3_/
+camera4_/
+__pycache__/
+result/
+result_/
+yolov3.cfg
+yolov3.txt
+yolov3.weights
