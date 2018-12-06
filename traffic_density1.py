@@ -82,10 +82,10 @@ def getCars(image,Height,Width):
 # http://giaothong.hochiminhcity.gov.vn/render/ImageHandler.ashx?id=58af8eb2bd82540010390c30&t=1538463084177
 #AREA_PTS = np.array([[450,130], [590,40], [615,50], [600,155]])
 
-np_array = [[98,287], [136,55], [170,55], [450,287]]
+np_array = [[195,450], [595,180], [670,180], [625,450]]
 AREA_PTS = np.array(np_array)
 
-img = cv2.imread('camera019.jpg')
+img = cv2.imread('camera2_17.jpg')
 h, w = img.shape[:2]
 print (w,h)
 
@@ -99,8 +99,7 @@ cl1 = clahe.apply(img)
 smooth = cv2.bilateralFilter(cl1, 10, 200, 200)
 
 # get edge from image
-edge = cv2.Canny(smooth, 45, 70)
-edge = ~edge
+edge = ~cv2.Canny(cv2.bilateralFilter(cl1, 10, 200, 200), 45, 70)
 
 blur = cv2.bilateralFilter(cv2.blur(edge,(21,21), 100),5,200,200)
 #blur = cv2.GaussianBlur(cv2.blur(edge, (21, 21), 100), (5, 5), 1)
@@ -109,14 +108,14 @@ _, threshold = cv2.threshold(blur, 220, 255, cv2.THRESH_BINARY)
 base = np.zeros((h, w) + (3,), dtype='uint8')
 area_mask = cv2.fillPoly(base, [AREA_PTS], (255, 255, 255))[:, :, 0]
 
-for k in cars:
-    x = int(k.split('||')[0])
-    y = int(k.split('||')[1])
-    w = int(k.split('||')[2])
-    h = int(k.split('||')[3])
-    vrx = np.array([[int(x + (w/2)), int(y)], [int(x + w), int(y + (h/2))],
-                    [int(x + (w/2)), int(y+h)], [int(x), int(y + (h/2))]], np.int32)
-    cv2.fillPoly(threshold, np.int_([vrx]), (0, 255, 255))
+# for k in cars:
+#     x = int(k.split('||')[0])
+#     y = int(k.split('||')[1])
+#     w = int(k.split('||')[2])
+#     h = int(k.split('||')[3])
+#     vrx = np.array([[int(x + (w/2)), int(y)], [int(x + w), int(y + (h/2))],
+#                     [int(x + (w/2)), int(y+h)], [int(x), int(y + (h/2))]], np.int32)
+#     cv2.fillPoly(threshold, np.int_([vrx]), (0, 255, 255))
 
 vrx = np.array(np_array, np.int32)
 vrx = vrx.reshape((-1, 1, 2))
@@ -127,19 +126,32 @@ t = cv2.bitwise_and(threshold, threshold, mask=area_mask)
 free = np.count_nonzero(t)
 allBackground = np.count_nonzero(area_mask)
 capacity = 1 - float(free)/allBackground
+cv2.putText(t,"Density: "+str((int)(capacity * 100)) +" %",(180,150), cv2.FONT_HERSHEY_SIMPLEX, 1.5, 255, 3)
+# fig = plt.figure()
+# fig.suptitle("Capacity: {}%".format(capacity*100), fontsize=16)
+# plt.subplot(221), plt.imshow(cl1), plt.title('Original')
+# plt.xticks([]), plt.yticks([])
+# plt.subplot(222), plt.imshow(edge), plt.title('Canny Edge')
+# plt.xticks([]), plt.yticks([])
+# plt.subplot(223), plt.imshow(blur), plt.title('Blur')
+# plt.xticks([]), plt.yticks([])
+# plt.subplot(224), plt.imshow(t), plt.title('Threshold with ROI mask')
+# plt.xticks([]), plt.yticks([])
 
-fig = plt.figure()
-fig.suptitle("Capacity: {}%".format(capacity*100), fontsize=16)
-plt.subplot(221), plt.imshow(cl1), plt.title('Original')
-plt.xticks([]), plt.yticks([])
-plt.subplot(222), plt.imshow(edge), plt.title('Canny Edge')
-plt.xticks([]), plt.yticks([])
-plt.subplot(223), plt.imshow(blur), plt.title('Blur')
-plt.xticks([]), plt.yticks([])
-plt.subplot(224), plt.imshow(t), plt.title('Threshold with ROI mask')
-plt.xticks([]), plt.yticks([])
+# fig.savefig('count.png', dpi=500)
+for i in cars:
+    x = int(i.split('||')[0])
+    y = int(i.split('||')[1])
+    w = int(i.split('||')[2])
+    h = int(i.split('||')[3])
+    cv2.rectangle(cl1, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+    cv2.rectangle(t, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+cv2.imwrite("1.jpg", cl1)
+cv2.imwrite("2.jpg", edge)
+cv2.imwrite("4.jpg", blur)
+cv2.imwrite("3.jpg", t)
+cv2.imwrite("5.jpg", img)
 
-fig.savefig('count.png', dpi=500)
 end_time = time.time()
 print("Time: " + str(end_time - begin_time) +
       " s\t" + str(int(capacity*100)) + " %")

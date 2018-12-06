@@ -48,9 +48,9 @@ while(1):
     
     end = time.time()
 
-    img = cv2.imread("result/result"+str(count)+".jpg")
-    cv2.imshow("Result", img)
-    cv2.waitKey(3000)
+    # img = cv2.imread("result/result"+str(count)+".jpg")
+    # cv2.imshow("Result", img)
+    # cv2.waitKey(3000)
 
     if (count == 59):
         count = 0

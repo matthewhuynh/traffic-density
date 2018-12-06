@@ -31,7 +31,7 @@ def getCars(image, Height, Width):
         for detection in out:
             scores = detection[5:]
             class_id = np.argmax(scores)
-            if class_id != 2 and class_id != 5 and class_id != 7:
+            if class_id != 2 and class_id != 5 and class_id != 7 and class_id != 3:
                 continue
             confidence = scores[class_id]
             if confidence > 0:
@@ -50,7 +50,7 @@ def getCars(image, Height, Width):
 
     for i in indices:
         i = i[0]
-        if str(classes[class_ids[i]]) != 'car' and str(classes[class_ids[i]]) != 'truck' and str(classes[class_ids[i]]) != 'bus':
+        if str(classes[class_ids[i]]) != 'car' and str(classes[class_ids[i]]) != 'truck' and str(classes[class_ids[i]]) != 'bus' and str(classes[class_ids[i]]) != 'motorcycle':
             continue
         box = boxes[i]
         x = box[0]
@@ -109,15 +109,77 @@ def getStateOfRoad(img,np_array, count):
     cv2.putText(t,"Density: "+str((int)(capacity * 100)) +" %",(10,37), cv2.FONT_HERSHEY_SIMPLEX, 1.5, 255, 3)
 
     if (np_array == [[98,287], [136,55], [170,55], [450,287]]):
-        cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
-        edge = cv2.resize(edge, (0, 0), None, .85, .85)
-        blur = cv2.resize(blur, (0, 0), None, .85, .85)
-        t = cv2.resize(t, (0, 0), None, .85, .85)
+        # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
+        # edge = cv2.resize(edge, (0, 0), None, .85, .85)
+        # blur = cv2.resize(blur, (0, 0), None, .85, .85)
+        # t = cv2.resize(t, (0, 0), None, .85, .85)
+        for i in cars:
+            x = int(i.split('||')[0])
+            y = int(i.split('||')[1])
+            w = int(i.split('||')[2])
+            h = int(i.split('||')[3])
+            cv2.rectangle(cl1, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+            cv2.rectangle(t, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+
 
         numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
         numpy_horizontal2 = np.concatenate((blur, t), axis=1)
         numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
-        cv2.imwrite("result/result" + str(count) + ".jpg", numpy_vertical)
+        cv2.imwrite("result1/result1_" + str(count) + ".jpg", numpy_vertical)
+    if (np_array == [[195,450], [595,180], [670,180], [625,450]]):
+        # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
+        # edge = cv2.resize(edge, (0, 0), None, .85, .85)
+        # blur = cv2.resize(blur, (0, 0), None, .85, .85)
+        # t = cv2.resize(t, (0, 0), None, .85, .85)
+        for i in cars:
+            x = int(i.split('||')[0])
+            y = int(i.split('||')[1])
+            w = int(i.split('||')[2])
+            h = int(i.split('||')[3])
+            cv2.rectangle(cl1, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+            cv2.rectangle(t, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+
+
+        numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
+        numpy_horizontal2 = np.concatenate((blur, t), axis=1)
+        numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
+        cv2.imwrite("result2/result2_" + str(count) + ".jpg", numpy_vertical)
+    if (np_array == [[285,80], [185,83], [100,85], [0,140], [0,287], [511,287], [511,128], [450,100]]):
+        # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
+        # edge = cv2.resize(edge, (0, 0), None, .85, .85)
+        # blur = cv2.resize(blur, (0, 0), None, .85, .85)
+        # t = cv2.resize(t, (0, 0), None, .85, .85)
+        for i in cars:
+            x = int(i.split('||')[0])
+            y = int(i.split('||')[1])
+            w = int(i.split('||')[2])
+            h = int(i.split('||')[3])
+            cv2.rectangle(cl1, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+            cv2.rectangle(t, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+
+
+        numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
+        numpy_horizontal2 = np.concatenate((blur, t), axis=1)
+        numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
+        cv2.imwrite("result3/result3_" + str(count) + ".jpg", numpy_vertical)
+    if (np_array == [[610,114], [583,135], [420,165], [140,450], [800,450], [665,170], [675,110]]):
+        # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
+        # edge = cv2.resize(edge, (0, 0), None, .85, .85)
+        # blur = cv2.resize(blur, (0, 0), None, .85, .85)
+        # t = cv2.resize(t, (0, 0), None, .85, .85)
+        for i in cars:
+            x = int(i.split('||')[0])
+            y = int(i.split('||')[1])
+            w = int(i.split('||')[2])
+            h = int(i.split('||')[3])
+            cv2.rectangle(cl1, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+            cv2.rectangle(t, (int(round(x)),int(round(y))), (int(round(x+w)),int(round(y+h))), (255, 0, 0), 2)
+
+
+        numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
+        numpy_horizontal2 = np.concatenate((blur, t), axis=1)
+        numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
+        cv2.imwrite("result4/result4_" + str(count) + ".jpg", numpy_vertical)
     return (capacity*100)
 
 # def downloadImageFromCamera(link, folder, count):
