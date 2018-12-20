@@ -9,7 +9,7 @@ import cv2
 
 # link1 = "http://giaothong.hochiminhcity.gov.vn/render/ImageHandler.ashx?id=5a823d555058170011f6eaa2&t=1538726297130"
 folder1 = "camera1"
-np_array1 = [[98,287], [136,55], [170,55], [450,287]]
+np_array1 = [[98,287], [130,77], [190,77], [450,287]]
 
 # link2 = "http://giaothong.hochiminhcity.gov.vn/render/ImageHandler.ashx?id=58af9670bd82540010390c34&t=1536658750404"
 folder2 = "camera2"
@@ -36,21 +36,19 @@ count = 0
 while(1):
     begin = time.time()
     datas = pool.starmap(camera1.getDataOfCamera, [(folder, np_array, count) for folder, np_array in input.items()])
-    # d = dict(itertools.zip_longest(*[iter(datas)] * 2, fillvalue=""))
-
 
     jsonData = {}
     for data in datas:
         jsonData.update(data)
         
-    URL = "http://localhost:8081/getState"
+    URL ="http://localhost:8081/getState"
     response = camera1.sendJsonREST(URL, jsonData)
     
     end = time.time()
 
-    # img = cv2.imread("result/result"+str(count)+".jpg")
-    # cv2.imshow("Result", img)
-    # cv2.waitKey(3000)
+    img = cv2.imread("result1/result1_"+str(count)+".jpg")
+    cv2.imshow("Result", img)
+    cv2.waitKey(3000)
 
     if (count == 59):
         count = 0

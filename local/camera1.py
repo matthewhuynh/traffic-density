@@ -108,7 +108,7 @@ def getStateOfRoad(img,np_array, count):
     capacity = 1 - float(free)/allBackground
     cv2.putText(t,"Density: "+str((int)(capacity * 100)) +" %",(10,37), cv2.FONT_HERSHEY_SIMPLEX, 1.5, 255, 3)
 
-    if (np_array == [[98,287], [136,55], [170,55], [450,287]]):
+    if (np_array == [[98,287], [130,77], [190,77], [450,287]]):
         # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
         # edge = cv2.resize(edge, (0, 0), None, .85, .85)
         # blur = cv2.resize(blur, (0, 0), None, .85, .85)
@@ -125,6 +125,7 @@ def getStateOfRoad(img,np_array, count):
         numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
         numpy_horizontal2 = np.concatenate((blur, t), axis=1)
         numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
+        numpy_vertical = cv2.resize(numpy_vertical, (0, 0), None, .85, .85)
         cv2.imwrite("result1/result1_" + str(count) + ".jpg", numpy_vertical)
     if (np_array == [[195,450], [595,180], [670,180], [625,450]]):
         # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
@@ -143,6 +144,7 @@ def getStateOfRoad(img,np_array, count):
         numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
         numpy_horizontal2 = np.concatenate((blur, t), axis=1)
         numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
+        numpy_vertical = cv2.resize(numpy_vertical, (0, 0), None, .85, .85)
         cv2.imwrite("result2/result2_" + str(count) + ".jpg", numpy_vertical)
     if (np_array == [[285,80], [185,83], [100,85], [0,140], [0,287], [511,287], [511,128], [450,100]]):
         # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
@@ -161,6 +163,7 @@ def getStateOfRoad(img,np_array, count):
         numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
         numpy_horizontal2 = np.concatenate((blur, t), axis=1)
         numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
+        numpy_vertical = cv2.resize(numpy_vertical, (0, 0), None, .85, .85)
         cv2.imwrite("result3/result3_" + str(count) + ".jpg", numpy_vertical)
     if (np_array == [[610,114], [583,135], [420,165], [140,450], [800,450], [665,170], [675,110]]):
         # cl1 = cv2.resize(cl1, (0, 0), None, .85, .85)
@@ -179,6 +182,7 @@ def getStateOfRoad(img,np_array, count):
         numpy_horizontal1 = np.concatenate((cl1, edge), axis=1)
         numpy_horizontal2 = np.concatenate((blur, t), axis=1)
         numpy_vertical = np.concatenate((numpy_horizontal1, numpy_horizontal2), axis=0)
+        numpy_vertical = cv2.resize(numpy_vertical, (0, 0), None, .85, .85)
         cv2.imwrite("result4/result4_" + str(count) + ".jpg", numpy_vertical)
     return (capacity*100)
 
@@ -208,12 +212,12 @@ def getDataOfCamera(folder, np_array, count):
     #     folder = "camera1"
     data ={}
     begin = time.time()
-    state = getStateOfRoad(folder + "/" + folder +"_"+ str(count) + ".jpg", np_array, count)
+    state = getStateOfRoad(folder + "/" + folder +"__"+ str(count) + ".jpg", np_array, count)
     
     data[folder + "_" + str(time.strftime("%Y-%m-%d %H:%M:%S"))] = int(state)
 
     end = time.time()
-    print (folder +" :" + str(state)[0:5] +"\t" + str(end - begin)[0:5])
+    print (folder +" :" + str(int(state)) +"%  _\t" + str(end - begin)[0:5]+" s")
     return data
 # http://giaothong.hochiminhcity.gov.vn/render/ImageHandler.ashx?id=58af9670bd82540010390c34&t=1536658750404
 #AREA_PTS = np.array([[195,450], [590,180], [670,180], [625,450]])
