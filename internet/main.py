@@ -43,7 +43,7 @@ while(1):
 
     img = cv2.imread("result_/result_"+str(count)+".jpg")
     cv2.imshow("Result", img)
-    cv2.waitKey(1)
+    cv2.waitKey(10000)
     count += 1
     print("-------" + str(end-begin)[0:4] + "s-------" +str(count))
     if (count == 60):

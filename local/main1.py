@@ -5,7 +5,6 @@ import json
 import time
 import cv2
 
-#processes = ('camera1.py', 'camera2.py', 'camera3.py', 'camera4.py')                                    
 
 # link1 = "http://giaothong.hochiminhcity.gov.vn/render/ImageHandler.ashx?id=5a823d555058170011f6eaa2&t=1538726297130"
 folder1 = "camera1"
@@ -46,16 +45,15 @@ while(1):
     
     end = time.time()
 
-    img = cv2.imread("result1/result1_"+str(count)+".jpg")
-    cv2.imshow("Result", img)
-    cv2.waitKey(3000)
+    #img = cv2.imread("result1/result1_"+str(count)+".jpg")
+    #cv2.imshow("Result", img)
+    #cv2.waitKey(6000)
 
     if (count == 59):
         count = 0
     else: count += 1
-    
 
     print("-------" + str(end-begin)[0:4] + "s-------" +str(count))
 
-    # time.sleep(3)
+    time.sleep(6)
 

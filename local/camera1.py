@@ -212,7 +212,7 @@ def getDataOfCamera(folder, np_array, count):
     #     folder = "camera1"
     data ={}
     begin = time.time()
-    state = getStateOfRoad(folder + "/" + folder +"__"+ str(count) + ".jpg", np_array, count)
+    state = getStateOfRoad(folder + "/" + folder +"_"+ str(count) + ".jpg", np_array, count)
     
     data[folder + "_" + str(time.strftime("%Y-%m-%d %H:%M:%S"))] = int(state)
 

@@ -9,6 +9,7 @@ local/result4/
 local/yolov3.cfg
 local/yolov3.txt
 local/yolov3.weights
+local/traffic-map.war
 
 internet/camera1_/
 internet/camera2_/
@@ -21,8 +22,11 @@ internet/result4_/
 internet/yolov3.cfg
 internet/yolov3.txt
 internet/yolov3.weights
+internet/traffic-map.war
 
 __pycache__/
 yolov3.cfg
 yolov3.txt
 yolov3.weights
+
+
